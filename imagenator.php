@@ -9,6 +9,7 @@ Author URI: http://imajenation.co.zw
 License: GPL2
 */
 
+ 
 add_action('rest_api_init', 'register_rest_images' );
 function register_rest_images(){
     register_rest_field( array('post'),
@@ -56,3 +57,17 @@ function user_registered($user) {
     // Do Something
     wp_new_user_notification($user);
 }
+
+add_action('rest_api_init', function() {
+    register_rest_field(
+        array('post'),
+        'formatted_date',
+        array(
+            'get_callback'    => function() {
+                return get_the_date();
+            },
+            'update_callback' => null,
+            'schema'          => null,
+        )
+    );
+});
